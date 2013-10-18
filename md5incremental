@@ -14,6 +14,7 @@ Client code will typically trigger execution halt and md5 output like this:
 """
 
 import argparse
+import hashlib
 import os
 import time
 
@@ -37,12 +38,12 @@ def run(args):
     """Primary point of execution."""
     print 'hello world'
     print args
-    aggregation = None
+    md5 = hashlib.md5()
     with open(args.input_file) as file_in:
         while True:
             data = file_in.read(BLOCK_SIZE)
             if data:
-                process_chunk(aggregation, data)
+                md5.update(data)
             else:  # Have hit end of file (possibly just for now...)
                 if os.path.exists(args.control_file):
                     break
@@ -50,12 +51,8 @@ def run(args):
                     print 'hiccup'
                     time.sleep(0.5)
                     file_in.seek(file_in.tell())
+    print md5.hexdigest()
     print 'all done'
-
-
-def process_chunk(accumulator, data):
-    """Aggregate data into accumulator"""
-    print repr(data)  # TODO
 
 
 if __name__ == '__main__':
