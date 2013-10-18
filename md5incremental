@@ -36,8 +36,6 @@ def parse_args():
 
 def run(args):
     """Primary point of execution."""
-    print 'hello world'
-    print args
     md5 = hashlib.md5()
     with open(args.input_file) as file_in:
         while True:
@@ -48,11 +46,9 @@ def run(args):
                 if os.path.exists(args.control_file):
                     break
                 else:
-                    print 'hiccup'
                     time.sleep(0.5)
                     file_in.seek(file_in.tell())
-    print md5.hexdigest()
-    print 'all done'
+    print md5.hexdigest(), '', args.input_file
 
 
 if __name__ == '__main__':

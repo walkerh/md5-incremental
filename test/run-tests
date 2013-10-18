@@ -5,11 +5,11 @@ mkdir target
 cd target
 cp ../test/test-* .
 cat test-split-a >>test-output
-../md5incremental test-output test-done &
-sleep 1
-cat test-split-b >>test-output; sleep 1
-cat test-split-c >>test-output; sleep 1
-cat test-split-d >>test-output; sleep 1
+../md5incremental test-output test-done >test-output.md5 &
+sleep 0.2
+cat test-split-b >>test-output; sleep 0.2
+cat test-split-c >>test-output; sleep 0.2
+cat test-split-d >>test-output; sleep 0.2
 touch test-done
 wait
-md5sum test-input test-output
+sed 's/input/output/' test-input.md5 | diff - test-output.md5
