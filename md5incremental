@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """Tool to incrementally read a growing file, computing an md5 checksum.
-Will continuously (every second) look for the existence of a "control file",
+Will continuously (every 0.5 secs) look for the existence of a "control file",
 which signals that the input file is complete.
 
 Typical invocation (in a separate shell):
@@ -13,6 +13,9 @@ Client code will typically trigger execution halt and md5 output like this:
     touch control_file
 """
 
+__version__ = '0.1.0'
+
+
 import argparse
 import hashlib
 import os
@@ -20,6 +23,7 @@ import time
 
 
 BLOCK_SIZE = 4096
+
 
 def main():
     args = parse_args()
